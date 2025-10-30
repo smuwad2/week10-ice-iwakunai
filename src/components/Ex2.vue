@@ -1,6 +1,6 @@
 <script>
     // Import BlogPost component
-    import blogPost from './subcomponents/BlogPost.vue'
+    import BlogPost from './subcomponents/BlogPost.vue';
 	import axios from 'axios'
     export default {
         data() {
@@ -10,12 +10,13 @@
         },
         computed: {
             baseUrl() {
-                if (window.location.hostname=='localhost')
-                    return 'http://localhost:3000' 
-                else {
-                    const codespace_host = window.location.hostname.replace('5173', '3000')
-                    return `https://${codespace_host}`;
-                }
+                // if (window.location.hostname=='localhost')
+                //     return 'http://localhost:3000' 
+                // else {
+                //     const codespace_host = window.location.hostname.replace('5173', '3000')
+                //     return `https://${codespace_host}`;
+                // }
+                return 'http://localhost:3000' 
             }
         },
         created() { // created is a hook that executes as soon as Vue instance is created
@@ -28,12 +29,18 @@
             .catch(error => {
                 this.posts = [{ entry: 'There was an error: ' + error.message }]
             })
+        },
+        components: {
+            BlogPost,
         }
     }
 </script>
 
 <template>
    <!-- TODO: make use of the 'blog-post' component to display the blog posts -->
+    <div v-for="post in posts">
+        <BlogPost v-bind:subject="post.subject" v-bind:entry="post.entry" v-bind:mood="post.mood"></BlogPost>
+    </div>
 
 </template>
 
